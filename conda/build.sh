@@ -79,7 +79,7 @@ else
 fi
 rm -rf "$root"
 printf '#include <bits/stdc++.h>\nint main() { std::vector<int> v{3, 1, 2}; std::ranges::sort(v); std::cout << v[0] << v[2] << "\\n"; }\n' > "$test/a.cpp"
-"$test/unpacked/$cxx" -std=c++23 -O2 $(jq -r '.[]' <<< "$flags") "$(native "$test/a.cpp")" -o "$(native "$test/a")"
+PATH="$(dirname "$test/unpacked/$cxx"):$PATH" "$test/unpacked/$cxx" -std=c++23 -O2 $(jq -r '.[]' <<< "$flags") "$(native "$test/a.cpp")" -o "$(native "$test/a")"
 [ "$("$test/a" | tr -d '\r')" = 13 ]
 "$test/unpacked/$python" -c 'import sys; assert sys.version_info[:2] == (3, 14)'
 
