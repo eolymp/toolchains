@@ -14,14 +14,21 @@ jobs:
         include:
           - os: ubuntu-22.04
             arch: x64
+            micromamba: linux-64 701f39c06f8e6a670a0e186c8479b9e5c0502a2f0cda6cef65d83bdd2875e8bd
           - os: ubuntu-22.04-arm
             arch: arm64
+            micromamba: linux-aarch64 3bb56786e21b9b24024f599fe9185b4a59dc3f9f59937a42311ee583adbbb23c
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: mamba-org/setup-micromamba@f457c30a868e4760d3a6fcea5f25dc655b8edf39 # v3.2.1
-        with:
-          micromamba-version: 2.10.0-0
+      - name: Install micromamba
+        run: |
+          read -r platform sha256 <<< "${{ matrix.micromamba }}"
+          mkdir -p "$RUNNER_TEMP/bin"
+          curl -fsSL -o "$RUNNER_TEMP/bin/micromamba" "https://github.com/mamba-org/micromamba-releases/releases/download/2.10.0-0/micromamba-$platform"
+          echo "$sha256  $RUNNER_TEMP/bin/micromamba" | sha256sum -c --quiet -
+          chmod +x "$RUNNER_TEMP/bin/micromamba"
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
       - run: ./linux/build.sh ${{ matrix.arch }}
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
