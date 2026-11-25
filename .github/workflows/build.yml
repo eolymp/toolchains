@@ -7,31 +7,63 @@ permissions:
   contents: read
 
 jobs:
-  linux:
+  conda:
+    name: ${{ matrix.name }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-22.04
-            arch: x64
-            micromamba: linux-64 701f39c06f8e6a670a0e186c8479b9e5c0502a2f0cda6cef65d83bdd2875e8bd
-          - os: ubuntu-22.04-arm
-            arch: arm64
-            micromamba: linux-aarch64 3bb56786e21b9b24024f599fe9185b4a59dc3f9f59937a42311ee583adbbb23c
+          - name: linux-x64
+            os: ubuntu-22.04
+            micromamba: micromamba-linux-64 701f39c06f8e6a670a0e186c8479b9e5c0502a2f0cda6cef65d83bdd2875e8bd micromamba
+          - name: linux-arm64
+            os: ubuntu-22.04-arm
+            micromamba: micromamba-linux-aarch64 3bb56786e21b9b24024f599fe9185b4a59dc3f9f59937a42311ee583adbbb23c micromamba
+          - name: win32-x64
+            os: windows-2022
+            micromamba: micromamba-win-64.exe f8b4284bd4eb1134122eaf93b3ea6c7be567e596de5829e1a6f478e34e41974a micromamba.exe
+            yq: yq_windows_amd64.exe f9b1962fc1cf4a1fca36b5d634aa1a2a541cb9a4aabb8536f43cb95fab9a904e yq.exe
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Install tools
+        run: |
+          bin="$RUNNER_TEMP/bin"
+          mkdir -p "$bin"
+          install() {
+            curl -fsSL -o "$bin/$3" "$1"
+            echo "$2  $bin/$3" | sha256sum -c --quiet -
+            chmod +x "$bin/$3"
+          }
+          read -r asset sha256 file <<< "${{ matrix.micromamba }}"
+          install "https://github.com/mamba-org/micromamba-releases/releases/download/2.10.0-0/$asset" "$sha256" "$file"
+          if [ -n "${{ matrix.yq }}" ]; then
+            read -r asset sha256 file <<< "${{ matrix.yq }}"
+            install "https://github.com/mikefarah/yq/releases/download/v4.47.2/$asset" "$sha256" "$file"
+          fi
+          echo "$bin" >> "$GITHUB_PATH"
+      - run: ./conda/build.sh ${{ matrix.name }}
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ${{ matrix.name }}
+          path: out/
+          if-no-files-found: error
+
+  macos:
+    name: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15, macos-26]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - name: Install micromamba
-        run: |
-          read -r platform sha256 <<< "${{ matrix.micromamba }}"
-          mkdir -p "$RUNNER_TEMP/bin"
-          curl -fsSL -o "$RUNNER_TEMP/bin/micromamba" "https://github.com/mamba-org/micromamba-releases/releases/download/2.10.0-0/micromamba-$platform"
-          echo "$sha256  $RUNNER_TEMP/bin/micromamba" | sha256sum -c --quiet -
-          chmod +x "$RUNNER_TEMP/bin/micromamba"
-          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
-      - run: ./linux/build.sh ${{ matrix.arch }}
+      - run: ./macos/build.sh
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: linux-${{ matrix.arch }}
+          name: ${{ matrix.os }}
           path: out/
           if-no-files-found: error

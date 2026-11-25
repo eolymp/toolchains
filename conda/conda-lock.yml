@@ -15,12 +15,14 @@ metadata:
   content_hash:
     linux-64: 00eddc32edf527681b9ff802735b541c38162cd039f1340375a58e8b6730ff45
     linux-aarch64: 8ab8c9e2e0c133c45fab64ede6e0000cb2e7b7c4e7d49bb7498a00ea1f7d3a28
+    win-64: 29b80e7fd0e59b33fbde73e8cbae260c0912ee64b7487430997461e313385d19
   channels:
   - url: conda-forge
     used_env_vars: []
   platforms:
   - linux-64
   - linux-aarch64
+  - win-64
   sources:
   - environment.yml
 package:
@@ -49,6 +51,19 @@ package:
     sha256: a2527b1d81792a0ccd2c05850960df119c2b6d8f5fdec97f2db7d25dc23b1068
   category: main
   optional: false
+- name: _openmp_mutex
+  version: '4.5'
+  manager: conda
+  platform: win-64
+  dependencies:
+    libgomp: '>=7.5.0'
+    libwinpthread: '>=12.0.0.r4.gg4f2fc60ca'
+  url: https://conda.anaconda.org/conda-forge/win-64/_openmp_mutex-4.5-20_gnu.conda
+  hash:
+    md5: 1626967b574d1784b578b52eaeb071e7
+    sha256: 8a1cee28bd0ee7451ada1cd50b64720e57e17ff994fc62dd8329bef570d382e4
+  category: main
+  optional: false
 - name: binutils_impl_linux-64
   version: 2.46.1
   manager: conda
@@ -75,6 +90,20 @@ package:
   hash:
     md5: 1ebaa45e5556156b3c7bf5bd5c527634
     sha256: 1827893f9d6aa13794196b1820b8003bfff0105774a323a61026a16cec6dc66d
+  category: main
+  optional: false
+- name: binutils_impl_win-64
+  version: 2.46.1
+  manager: conda
+  platform: win-64
+  dependencies:
+    ld_impl_win-64: 2.46.1
+    m2w64-sysroot_win-64: '>=12.0.0.r0'
+    zstd: '>=1.5.7,<1.6.0a0'
+  url: https://conda.anaconda.org/conda-forge/win-64/binutils_impl_win-64-2.46.1-default_ha84baeb_103.conda
+  hash:
+    md5: 3200f814fad9ec6ba854f88b0dbdeed7
+    sha256: 4f165824588d2600d202efc14727a5360f75508134a58b12943104f4731c696f
   category: main
   optional: false
 - name: gcc_impl_linux-64
@@ -113,6 +142,23 @@ package:
     sha256: c76f5bf3e258ecd8b6e6c8051c180138a1e2a75c933b7cb5daff8fadb73d222a
   category: main
   optional: false
+- name: gcc_impl_win-64
+  version: 14.2.0
+  manager: conda
+  platform: win-64
+  dependencies:
+    binutils_impl_win-64: '>=2.40'
+    libgcc: '>=14.2.0'
+    libgcc-devel_win-64: 14.2.0
+    libgomp: '>=14.2.0'
+    libstdcxx: '>=14.2.0'
+    m2w64-sysroot_win-64: ''
+  url: https://conda.anaconda.org/conda-forge/win-64/gcc_impl_win-64-14.2.0-h7f48517_2.conda
+  hash:
+    md5: d3af722a341ce0845d377a0754d05b89
+    sha256: 72578058ad663eef223863b04d9ea532f4caaf439ea81ee08b2b40168e29465e
+  category: main
+  optional: false
 - name: gxx_impl_linux-64
   version: 14.2.0
   manager: conda
@@ -141,6 +187,21 @@ package:
   hash:
     md5: 73ce5c6c22fa6165430f3b5e5b869308
     sha256: 189959e28bd93c2cf63a4c89f86caffd53e1cd74b3e169cdfb4497d2a65afb94
+  category: main
+  optional: false
+- name: gxx_impl_win-64
+  version: 14.2.0
+  manager: conda
+  platform: win-64
+  dependencies:
+    gcc_impl_win-64: 14.2.0
+    libstdcxx-devel_win-64: 14.2.0
+    m2w64-sysroot_win-64: ''
+    tzdata: ''
+  url: https://conda.anaconda.org/conda-forge/win-64/gxx_impl_win-64-14.2.0-hb5e3787_2.conda
+  hash:
+    md5: a4530df8d696a88e457130af186e6c26
+    sha256: 1145cc2ab57af02ab10907837d8f75d2148acbbeb86bfab34a361183ea888271
   category: main
   optional: false
 - name: kernel-headers_linux-64
@@ -190,6 +251,18 @@ package:
     sha256: 516808982ad26ebdc4a9d8f71ee86ea55d0bc95382b7bca80620e0ac220971f3
   category: main
   optional: false
+- name: ld_impl_win-64
+  version: 2.46.1
+  manager: conda
+  platform: win-64
+  dependencies:
+    zstd: '>=1.5.7,<1.6.0a0'
+  url: https://conda.anaconda.org/conda-forge/win-64/ld_impl_win-64-2.46.1-default_hfd38196_103.conda
+  hash:
+    md5: b8bcce8565b7abaf55f8f414c87dc1e7
+    sha256: 4d84eaf3073ccc3935777e73d5508770c370d62279c1af261118cc91c5d55b73
+  category: main
+  optional: false
 - name: libgcc
   version: 16.2.0
   manager: conda
@@ -213,6 +286,19 @@ package:
   hash:
     md5: 489d5c9dc62265b3f6a57f9a106f1caf
     sha256: eae7a3449d5a3b5351c5427137c076cc3fc826645c7bfc42dc10772b783826f1
+  category: main
+  optional: false
+- name: libgcc
+  version: 16.2.0
+  manager: conda
+  platform: win-64
+  dependencies:
+    _openmp_mutex: '>=4.5'
+    libwinpthread: '>=12.0.0.r4.gg4f2fc60ca'
+  url: https://conda.anaconda.org/conda-forge/win-64/libgcc-16.2.0-h110b43a_7.conda
+  hash:
+    md5: bd1e0d06981ae43e35c1ebb50e268c59
+    sha256: 59feb6d16cba13a70f22dae70a44670eb2cc45e652e9a34a014814c2ca871132
   category: main
   optional: false
 - name: libgcc-devel_linux-64
@@ -239,6 +325,18 @@ package:
     sha256: 9a03b358f0d2677d82683a0adc7ca466db5f7fc9f02bc972b9bebd8b2500d2be
   category: main
   optional: false
+- name: libgcc-devel_win-64
+  version: 14.2.0
+  manager: conda
+  platform: win-64
+  dependencies:
+    __win: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/libgcc-devel_win-64-14.2.0-h7c23ffb_102.conda
+  hash:
+    md5: 0512d6c4f42803f6fe98dd8f7a81b3ab
+    sha256: 60fadeb8a9d6277fc9269385b0b94f6041c3e466229a693dfbc0b40b04fcbeea
+  category: main
+  optional: false
 - name: libgomp
   version: 16.2.0
   manager: conda
@@ -260,6 +358,18 @@ package:
   hash:
     md5: 259ded79ac497cfbcf5434540e8b81b6
     sha256: 4406fd67c5beeb99b9372f9bf07aa3e40ca141e337eceebac3ff64aa72799494
+  category: main
+  optional: false
+- name: libgomp
+  version: 16.2.0
+  manager: conda
+  platform: win-64
+  dependencies:
+    libwinpthread: '>=12.0.0.r4.gg4f2fc60ca'
+  url: https://conda.anaconda.org/conda-forge/win-64/libgomp-16.2.0-h8ee18e1_7.conda
+  hash:
+    md5: 1725e0c19dd2f01de09805536c4f3b51
+    sha256: 4b8a747f047d069ccd2a6cf2f4fdbc6b0c0e4dcd840998d1fe607b8c234e707b
   category: main
   optional: false
 - name: libsanitizer
@@ -314,6 +424,19 @@ package:
     sha256: b241a3acfa9cdb1359112864a1241225533c92642de3000d52ae65ef5d3a9786
   category: main
   optional: false
+- name: libstdcxx
+  version: 16.2.0
+  manager: conda
+  platform: win-64
+  dependencies:
+    libgcc: 16.2.0
+    libwinpthread: '>=12.0.0.r4.gg4f2fc60ca'
+  url: https://conda.anaconda.org/conda-forge/win-64/libstdcxx-16.2.0-hae5796f_7.conda
+  hash:
+    md5: cdc259116f09ebebe2442f855aa03cfd
+    sha256: 5984f81dcb289446fb3cdb0117c0680bded57eaa98da193f705400ec94fc71ae
+  category: main
+  optional: false
 - name: libstdcxx-devel_linux-64
   version: 14.2.0
   manager: conda
@@ -338,6 +461,29 @@ package:
     sha256: 87af5f5f824770f07999e64cfadda390ba877fdc663e0dd43ccbfa548be255fb
   category: main
   optional: false
+- name: libstdcxx-devel_win-64
+  version: 14.2.0
+  manager: conda
+  platform: win-64
+  dependencies:
+    __win: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/libstdcxx-devel_win-64-14.2.0-h7c23ffb_102.conda
+  hash:
+    md5: 65f093bcfd18feb42bd2b38f6da4fde8
+    sha256: 1063f786a16d8faeb5409a12193c60db189707dade43c14d8ee9fb05a01304b6
+  category: main
+  optional: false
+- name: libwinpthread
+  version: 12.0.0.r688.g6b2176247.1
+  manager: conda
+  platform: win-64
+  dependencies: {}
+  url: https://conda.anaconda.org/conda-forge/win-64/libwinpthread-12.0.0.r688.g6b2176247.1-h57928b3_0.conda
+  hash:
+    md5: a1b8ebbb78e979c42b2bdd97ad7756e0
+    sha256: bab5558663cb0e964988b859abd69d0f2380b6ea9f140495ab543e51af13635d
+  category: main
+  optional: false
 - name: libzlib
   version: 1.3.2
   manager: conda
@@ -359,6 +505,98 @@ package:
   hash:
     md5: bd534c2fbe56d8c2ea3b2d8f5e12bca8
     sha256: 76efa6cc9d7e6f5ee3bbca0939f64054af2bdfb3c3632531f8e633cf6c2ea41e
+  category: main
+  optional: false
+- name: libzlib
+  version: 1.3.2
+  manager: conda
+  platform: win-64
+  dependencies:
+    ucrt: '>=10.0.20348.0'
+    vc: '>=14.3,<15'
+    vc14_runtime: '>=14.44.35208'
+  url: https://conda.anaconda.org/conda-forge/win-64/libzlib-1.3.2-hfd05255_3.conda
+  hash:
+    md5: 5d2ff29d465097458cc3ff6569151991
+    sha256: 0629c2cc0404d3bb29d6baa7b4ba62da80797015e86de050db81ea5a07050527
+  category: main
+  optional: false
+- name: m2-conda-epoch
+  version: '20261029'
+  manager: conda
+  platform: win-64
+  dependencies: {}
+  url: https://conda.anaconda.org/conda-forge/win-64/m2-conda-epoch-20261029-0_x86_64.conda
+  hash:
+    md5: 51e02aff9e4270d4b8267aea3514750e
+    sha256: 10e83837e3dd4b9da952d892b976a5dd8d67d97217942f441a43d053e815c1d7
+  category: main
+  optional: false
+- name: m2w64-sysroot_win-64
+  version: 12.0.0.r4.gg4f2fc60ca
+  manager: conda
+  platform: win-64
+  dependencies:
+    m2-conda-epoch: ''
+    mingw-w64-ucrt-x86_64-crt-git: 12.0.0.r4.gg4f2fc60ca
+    mingw-w64-ucrt-x86_64-headers-git: 12.0.0.r4.gg4f2fc60ca
+    mingw-w64-ucrt-x86_64-windows-default-manifest: ''
+    mingw-w64-ucrt-x86_64-winpthreads-git: 12.0.0.r4.gg4f2fc60ca
+    ucrt: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/m2w64-sysroot_win-64-12.0.0.r4.gg4f2fc60ca-hd8ed1ab_10.conda
+  hash:
+    md5: 9676d2a30fa3ffa4e5350041d0993758
+    sha256: fb0ffe6b3c25189038c29abbd1fac2522d87fe2775a09e5f5088e5542dc3309b
+  category: main
+  optional: false
+- name: mingw-w64-ucrt-x86_64-crt-git
+  version: 12.0.0.r4.gg4f2fc60ca
+  manager: conda
+  platform: win-64
+  dependencies:
+    m2-conda-epoch: ''
+    mingw-w64-ucrt-x86_64-headers-git: 12.0.0.r4.gg4f2fc60ca
+  url: https://conda.anaconda.org/conda-forge/noarch/mingw-w64-ucrt-x86_64-crt-git-12.0.0.r4.gg4f2fc60ca-hd8ed1ab_10.conda
+  hash:
+    md5: 44ffa6d68699ec9321f6d48d75bdc726
+    sha256: de3e42149b498c16bfb485b7729f4ca0fe392be576a2a10ff702d661799b1df3
+  category: main
+  optional: false
+- name: mingw-w64-ucrt-x86_64-headers-git
+  version: 12.0.0.r4.gg4f2fc60ca
+  manager: conda
+  platform: win-64
+  dependencies:
+    m2-conda-epoch: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/mingw-w64-ucrt-x86_64-headers-git-12.0.0.r4.gg4f2fc60ca-hd8ed1ab_10.conda
+  hash:
+    md5: cab7b807024204893ef5bb1860d91408
+    sha256: 1add86481f35163215e7076e6f06f22aa9f1f9345a5fff5cb07bc846c13fbec7
+  category: main
+  optional: false
+- name: mingw-w64-ucrt-x86_64-windows-default-manifest
+  version: '6.4'
+  manager: conda
+  platform: win-64
+  dependencies:
+    __win: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/mingw-w64-ucrt-x86_64-windows-default-manifest-6.4-he206cdd_7.conda
+  hash:
+    md5: 1d6b5c96d7e3cce773519d7d1a4482f0
+    sha256: 5b0df4e0ba8487ffd59f60c34c5dbb9e001ecd2c5d2c66ba88eada40bfa3ecb8
+  category: main
+  optional: false
+- name: mingw-w64-ucrt-x86_64-winpthreads-git
+  version: 12.0.0.r4.gg4f2fc60ca
+  manager: conda
+  platform: win-64
+  dependencies:
+    m2-conda-epoch: ''
+    mingw-w64-ucrt-x86_64-headers-git: 12.0.0.r4.gg4f2fc60ca
+  url: https://conda.anaconda.org/conda-forge/noarch/mingw-w64-ucrt-x86_64-winpthreads-git-12.0.0.r4.gg4f2fc60ca-hd8ed1ab_10.conda
+  hash:
+    md5: ba0eeff6a5c62b83c771bb392e22dbb4
+    sha256: 828abb111286940473c4c665fc8ab300d28920f5af83b32295e8bf2256a8f342
   category: main
   optional: false
 - name: sysroot_linux-64
@@ -411,6 +649,65 @@ package:
     sha256: 2b7ca858879f183ce2dcc65b300f48a0133d5430550f35b23d80d405a0788dbf
   category: main
   optional: false
+- name: tzdata
+  version: 2026e
+  manager: conda
+  platform: win-64
+  dependencies: {}
+  url: https://conda.anaconda.org/conda-forge/noarch/tzdata-2026e-h5d301ff_0.conda
+  hash:
+    md5: abccc3810d2b97e570dee487f2b46e38
+    sha256: 2b7ca858879f183ce2dcc65b300f48a0133d5430550f35b23d80d405a0788dbf
+  category: main
+  optional: false
+- name: ucrt
+  version: 10.0.26100.0
+  manager: conda
+  platform: win-64
+  dependencies: {}
+  url: https://conda.anaconda.org/conda-forge/win-64/ucrt-10.0.26100.0-h57928b3_0.conda
+  hash:
+    md5: 71b24316859acd00bdb8b38f5e2ce328
+    sha256: 3005729dce6f3d3f5ec91dfc49fc75a0095f9cd23bab49efb899657297ac91a5
+  category: main
+  optional: false
+- name: vc
+  version: '14.5'
+  manager: conda
+  platform: win-64
+  dependencies:
+    vc14_runtime: '>=14.52.37029'
+  url: https://conda.anaconda.org/conda-forge/win-64/vc-14.5-h17caf24_45.conda
+  hash:
+    md5: f3789be3cf3d9001ab367af9796e3536
+    sha256: e83597d881e95543a990396fb619a622c722f05e1e3c3371d248c74950659233
+  category: main
+  optional: false
+- name: vc14_runtime
+  version: 14.52.37029
+  manager: conda
+  platform: win-64
+  dependencies:
+    ucrt: '>=10.0.20348.0'
+    vcomp14: ==14.52.37029
+  url: https://conda.anaconda.org/conda-forge/win-64/vc14_runtime-14.52.37029-hfcedb63_45.conda
+  hash:
+    md5: 8cb05bbd5cc17baa32ea8f470bfd3a82
+    sha256: fc56758530ae98573f0caf9a1270a4e2c77f3c53a2662bac5a6ccd0998f5c94b
+  category: main
+  optional: false
+- name: vcomp14
+  version: 14.52.37029
+  manager: conda
+  platform: win-64
+  dependencies:
+    ucrt: '>=10.0.20348.0'
+  url: https://conda.anaconda.org/conda-forge/win-64/vcomp14-14.52.37029-h54d7a3b_45.conda
+  hash:
+    md5: 5ceb5f8cf8403a5dfd3788cbda700d5f
+    sha256: 8307d1893da5f6b56bac3c8068e775c08875f3569a97ab9219d33eb3c4015d36
+  category: main
+  optional: false
 - name: zstd
   version: 1.5.7
   manager: conda
@@ -434,5 +731,20 @@ package:
   hash:
     md5: d942e34ac3920ba83f8b2d0169570187
     sha256: 427fd14bcb3b8659796fecc682716617409350fb5a98e5b7b47558a10d1a2fc7
+  category: main
+  optional: false
+- name: zstd
+  version: 1.5.7
+  manager: conda
+  platform: win-64
+  dependencies:
+    libzlib: '>=1.3.2,<2.0a0'
+    ucrt: '>=10.0.20348.0'
+    vc: '>=14.3,<15'
+    vc14_runtime: '>=14.44.35208'
+  url: https://conda.anaconda.org/conda-forge/win-64/zstd-1.5.7-h534d264_7.conda
+  hash:
+    md5: e4ac308c39d6d0e131154976da67cf3b
+    sha256: ca7daae4f218a11fab82cc2857f0ea518ec3f46acec60490485347a4c22c6b3e
   category: main
   optional: false
