@@ -6,7 +6,8 @@ here="$(cd "$(dirname "$0")" && pwd)"
 out="$(dirname "$here")/out"
 formula=gcc@14
 version=14.4.0
-name="darwin-arm64-$(uname -r | cut -d. -f1)"
+case "$(uname -m)" in arm64) arch=arm64 ;; x86_64) arch=x64 ;; *) echo "unknown machine: $(uname -m)"; exit 1 ;; esac
+name="darwin-$arch-$(uname -r | cut -d. -f1)"
 
 work="$(mktemp -d)"
 root="$work/toolchain"
@@ -38,7 +39,8 @@ for each in $formula $(brew deps "$formula"); do
 done
 python3 "$here/relocate.py" "$root" "$(brew --prefix)"
 
-while read -r arch sha256 url; do
+while read -r platform sha256 url; do
+  [ "$platform" = "$arch" ] || continue
   file="$work/$(basename "$url")"
   fetch "$url" "$file" "$sha256"
   tar -xzf "$file" -C "$root"
