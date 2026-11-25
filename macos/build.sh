@@ -28,7 +28,9 @@ for each in $formula $(brew deps "$formula"); do
   jq -r '[.name, .installed[0].version, .license] | @tsv' <<< "$info" >> "$root/licenses/packages.txt"
   core="https://raw.githubusercontent.com/Homebrew/homebrew-core/$(jq -r .tap_git_head <<< "$info")"
   fetch "$core/$(jq -r .ruby_source_path <<< "$info")" "$sources/recipes/$each.rb" ""
-  jq -r --arg core "$core" '(.urls.stable | [.url, .checksum]), (.patches[]? | if .file then [$core + "/" + .file, ""] else [.url, .sha256] end) | @tsv' <<< "$info" |
+  brew fetch --quiet --build-from-source "$each"
+  cp "$(brew --cache --build-from-source "$each")" "$sources/files/$(basename "$(jq -r .urls.stable.url <<< "$info")")"
+  jq -r --arg core "$core" '.patches[]? | if .file then [$core + "/" + .file, ""] else [.url, .sha256] end | @tsv' <<< "$info" |
     while IFS=$'\t' read -r url sha256; do
       file="$sources/files/$(basename "$url")"
       [ -e "$file" ] || fetch "$url" "$file" "$sha256"
