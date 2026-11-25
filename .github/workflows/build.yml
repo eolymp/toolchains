@@ -2,6 +2,11 @@ name: build
 
 on:
   workflow_dispatch:
+    inputs:
+      publish:
+        description: Upload the toolchains to downloads.eolymp.com
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -67,3 +72,43 @@ jobs:
           name: ${{ matrix.os }}
           path: out/
           if-no-files-found: error
+
+  publish:
+    if: inputs.publish
+    needs: [conda, macos]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          path: out
+          merge-multiple: true
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          role-to-assume: ${{ vars.AWS_PUBLISHER_ROLE }}
+          aws-region: eu-central-1
+      - name: Upload
+        env:
+          BUCKET: ${{ vars.DOWNLOADS_BUCKET }}
+        run: |
+          cd out
+          aws s3 cp --recursive --only-show-errors source "$BUCKET/toolchains/source" --cache-control "public, max-age=31536000, immutable"
+          echo '{}' > toolchains.json
+          for description in *.json; do
+            [ "$description" != toolchains.json ] || continue
+            name="${description%.json}"
+            sha256="$(jq -r .sha256 "$description")"
+            [ "$(sha256sum "$name.tar.gz" | cut -d' ' -f1)" = "$sha256" ]
+            file="$name-${sha256:0:12}.tar.gz"
+            aws s3 cp --only-show-errors "$name.tar.gz" "$BUCKET/toolchains/$file" --cache-control "public, max-age=31536000, immutable"
+            jq --arg name "$name" --arg url "https://downloads.eolymp.com/code/toolchains/$file" --slurpfile description "$description" \
+              '.[$name] = ({url: $url} + $description[0])' toolchains.json > next.json
+            mv next.json toolchains.json
+          done
+          cat toolchains.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: toolchains
+          path: out/toolchains.json
