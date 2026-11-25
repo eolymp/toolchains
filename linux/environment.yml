@@ -1,0 +1,10 @@
+channels:
+  - conda-forge
+platforms:
+  - linux-64
+  - linux-aarch64
+dependencies:
+  - gxx_impl_linux-64 14.2.0  # [linux64]
+  - gxx_impl_linux-aarch64 14.2.0  # [aarch64]
+  - sysroot_linux-64 2.28  # [linux64]
+  - sysroot_linux-aarch64 2.28  # [aarch64]
