@@ -1,1 +1,2 @@
 arm64 f15ec3d15460dd66c2eb88639b152cd9040e7d1ece11e38bf89e8f53f0171e02 https://github.com/astral-sh/python-build-standalone/releases/download/20261110/cpython-3.14.10%2B20261110-aarch64-apple-darwin-install_only_stripped.tar.gz
+x64 85f8e54798e8e6aa58d2253f013d815c5616343cc0d15cbea882fca78bdfeae2 https://github.com/astral-sh/python-build-standalone/releases/download/20261110/cpython-3.14.10%2B20261110-x86_64-apple-darwin-install_only_stripped.tar.gz
