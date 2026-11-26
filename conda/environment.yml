@@ -10,3 +10,4 @@ dependencies:
   - gxx_impl_win-64 14.2.0  # [win]
   - sysroot_linux-64 2.28  # [linux64]
   - sysroot_linux-aarch64 2.28  # [aarch64]
+  - clang-tools 23.1.*  # [aarch64]
