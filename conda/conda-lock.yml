@@ -14,7 +14,7 @@ version: 1
 metadata:
   content_hash:
     linux-64: 00eddc32edf527681b9ff802735b541c38162cd039f1340375a58e8b6730ff45
-    linux-aarch64: 8ab8c9e2e0c133c45fab64ede6e0000cb2e7b7c4e7d49bb7498a00ea1f7d3a28
+    linux-aarch64: 5380dc65def5acc3237339675d32e7881d3fd0a4ff44d5d508aed79bc0a84dc1
     win-64: 29b80e7fd0e59b33fbde73e8cbae260c0912ee64b7487430997461e313385d19
   channels:
   - url: conda-forge
@@ -104,6 +104,86 @@ package:
   hash:
     md5: 3200f814fad9ec6ba854f88b0dbdeed7
     sha256: 4f165824588d2600d202efc14727a5360f75508134a58b12943104f4731c696f
+  category: main
+  optional: false
+- name: clang-format
+  version: 23.1.6
+  manager: conda
+  platform: linux-aarch64
+  dependencies:
+    clang-format-23: ==23.1.6
+    libclang-cpp23.1: '>=23.1.6,<23.2.0a0'
+    libgcc: '>=15'
+    libstdcxx: '>=15'
+    libxml2: ''
+    libxml2-16: '>=2.15.4'
+    libzlib: '>=1.3.2,<2.0a0'
+    zstd: '>=1.5.7,<1.6.0a0'
+  url: https://conda.anaconda.org/conda-forge/linux-aarch64/clang-format-23.1.6-default_h735af1a_0.conda
+  hash:
+    md5: 255a56ae83dfc7d4a6cc8adbc2de129b
+    sha256: 99a1eaaaf3d0425ef3d6d80de1b9ed22c9a29c2aa16479d3af0056e3e01e421d
+  category: main
+  optional: false
+- name: clang-format-23
+  version: 23.1.6
+  manager: conda
+  platform: linux-aarch64
+  dependencies:
+    libclang-cpp23.1: '>=23.1.6,<23.2.0a0'
+    libgcc: '>=15'
+    libllvm23: '>=23.1.6,<23.2.0a0'
+    libstdcxx: '>=15'
+    libxml2: ''
+    libxml2-16: '>=2.15.4'
+    libzlib: '>=1.3.2,<2.0a0'
+    zstd: '>=1.5.7,<1.6.0a0'
+  url: https://conda.anaconda.org/conda-forge/linux-aarch64/clang-format-23-23.1.6-default_h01b09c7_0.conda
+  hash:
+    md5: e5a364883ae409f4cc1611a6a4028a3e
+    sha256: ef3e5bd728c366bb44f7d9fd36e064c70cabb28c0c2022321d706cdb44c85639
+  category: main
+  optional: false
+- name: clang-scan-deps
+  version: 23.1.6
+  manager: conda
+  platform: linux-aarch64
+  dependencies:
+    libclang-cpp23.1: '>=23.1.6,<23.2.0a0'
+    libclang13: '>=23.1.6'
+    libgcc: '>=15'
+    libllvm23: '>=23.1.6,<23.2.0a0'
+    libstdcxx: '>=15'
+    libxml2: ''
+    libxml2-16: '>=2.15.4'
+    libzlib: '>=1.3.2,<2.0a0'
+    zstd: '>=1.5.7,<1.6.0a0'
+  url: https://conda.anaconda.org/conda-forge/linux-aarch64/clang-scan-deps-23.1.6-default_h01b09c7_0.conda
+  hash:
+    md5: 7551118ba16dd0cc4514bb49e7887a26
+    sha256: ca17d042925c833606bc5c543520c9072323a721de1a72a4c6bc322625d470f2
+  category: main
+  optional: false
+- name: clang-tools
+  version: 23.1.6
+  manager: conda
+  platform: linux-aarch64
+  dependencies:
+    clang-format: ==23.1.6
+    clang-scan-deps: ==23.1.6
+    libclang-cpp23.1: '>=23.1.6,<23.2.0a0'
+    libclang13: '>=23.1.6'
+    libgcc: '>=15'
+    libllvm23: '>=23.1.6,<23.2.0a0'
+    libstdcxx: '>=15'
+    libxml2: ''
+    libxml2-16: '>=2.15.4'
+    libzlib: '>=1.3.2,<2.0a0'
+    zstd: '>=1.5.7,<1.6.0a0'
+  url: https://conda.anaconda.org/conda-forge/linux-aarch64/clang-tools-23.1.6-default_h7fd4690_0.conda
+  hash:
+    md5: 1c37deb2b5fccf79ec97ca5bacd33086
+    sha256: 69ec2b2cf4b1c2fa10ad500d1ebe38d66003fde93ee36db2c21fb0815491c7be
   category: main
   optional: false
 - name: gcc_impl_linux-64
@@ -263,6 +343,43 @@ package:
     sha256: 4d84eaf3073ccc3935777e73d5508770c370d62279c1af261118cc91c5d55b73
   category: main
   optional: false
+- name: libclang-cpp23.1
+  version: 23.1.6
+  manager: conda
+  platform: linux-aarch64
+  dependencies:
+    libgcc: '>=15'
+    libllvm23: '>=23.1.6,<23.2.0a0'
+    libstdcxx: '>=15'
+    libxml2: ''
+    libxml2-16: '>=2.15.4'
+    libzlib: '>=1.3.2,<2.0a0'
+    zstd: '>=1.5.7,<1.6.0a0'
+  url: https://conda.anaconda.org/conda-forge/linux-aarch64/libclang-cpp23.1-23.1.6-default_h01b09c7_0.conda
+  hash:
+    md5: ae07041b39d54229fb6fe0e3f717d18f
+    sha256: f9aba424a32e6ed9a777f73f6b4b4ded947d5288807311140ccf91443e005591
+  category: main
+  optional: false
+- name: libclang13
+  version: 23.1.6
+  manager: conda
+  platform: linux-aarch64
+  dependencies:
+    libclang-cpp23.1: ==23.1.6
+    libgcc: '>=15'
+    libllvm23: '>=23.1.6,<23.2.0a0'
+    libstdcxx: '>=15'
+    libxml2: ''
+    libxml2-16: '>=2.15.4'
+    libzlib: '>=1.3.2,<2.0a0'
+    zstd: '>=1.5.7,<1.6.0a0'
+  url: https://conda.anaconda.org/conda-forge/linux-aarch64/libclang13-23.1.6-default_h8b50b4e_0.conda
+  hash:
+    md5: e45c30c7178cdc958e69166b92dab1ed
+    sha256: 2795d3ccd024ec05456dbcde9c24ab9b46ed2a7cd766a2ee9418506e48a405fb
+  category: main
+  optional: false
 - name: libgcc
   version: 16.2.0
   manager: conda
@@ -370,6 +487,47 @@ package:
   hash:
     md5: 1725e0c19dd2f01de09805536c4f3b51
     sha256: 4b8a747f047d069ccd2a6cf2f4fdbc6b0c0e4dcd840998d1fe607b8c234e707b
+  category: main
+  optional: false
+- name: libiconv
+  version: '1.18'
+  manager: conda
+  platform: linux-aarch64
+  dependencies:
+    libgcc: '>=15'
+  url: https://conda.anaconda.org/conda-forge/linux-aarch64/libiconv-1.18-h1ea5142_3.conda
+  hash:
+    md5: 951b54a36388613a99820b33b997f690
+    sha256: d22c666eb887afd2119aac2110e23a0e817e9391bda99293421f7c46dab1564c
+  category: main
+  optional: false
+- name: libllvm23
+  version: 23.1.6
+  manager: conda
+  platform: linux-aarch64
+  dependencies:
+    libgcc: '>=15'
+    libstdcxx: '>=15'
+    libxml2: ''
+    libxml2-16: '>=2.15.4'
+    libzlib: '>=1.3.2,<2.0a0'
+    zstd: '>=1.5.7,<1.6.0a0'
+  url: https://conda.anaconda.org/conda-forge/linux-aarch64/libllvm23-23.1.6-h680871c_0.conda
+  hash:
+    md5: 70bb78993724ec600cb4ef31349b2cc7
+    sha256: 092f7820f3f467647ef8c7db696345f5c975f4bec0ecccafb4e2b07e9a5bfbf1
+  category: main
+  optional: false
+- name: liblzma
+  version: 5.8.3
+  manager: conda
+  platform: linux-aarch64
+  dependencies:
+    libgcc: '>=14'
+  url: https://conda.anaconda.org/conda-forge/linux-aarch64/liblzma-5.8.3-he30d5cf_1.conda
+  hash:
+    md5: e0e6411a60d00186eec7c73f4118ab67
+    sha256: f760669fd1cea27f689f411c0d5488e26ce50e382c9b63e4ad348f959850124a
   category: main
   optional: false
 - name: libsanitizer
@@ -482,6 +640,37 @@ package:
   hash:
     md5: a1b8ebbb78e979c42b2bdd97ad7756e0
     sha256: bab5558663cb0e964988b859abd69d0f2380b6ea9f140495ab543e51af13635d
+  category: main
+  optional: false
+- name: libxml2
+  version: 2.15.4
+  manager: conda
+  platform: linux-aarch64
+  dependencies:
+    libgcc: '>=15'
+    libiconv: '>=1.18,<2.0a0'
+    liblzma: '>=5.8.3,<6.0a0'
+    libxml2-16: 2.15.4
+    libzlib: '>=1.3.2,<2.0a0'
+  url: https://conda.anaconda.org/conda-forge/linux-aarch64/libxml2-2.15.4-ha1111c9_1.conda
+  hash:
+    md5: 1ae53d1478445d9f49f3e23e3fc24314
+    sha256: 4d2fb77baf134ca2c4ba0c4ad760ff59f9c968aecbb7be7bbd530bd175e33953
+  category: main
+  optional: false
+- name: libxml2-16
+  version: 2.15.4
+  manager: conda
+  platform: linux-aarch64
+  dependencies:
+    libgcc: '>=15'
+    libiconv: '>=1.18,<2.0a0'
+    liblzma: '>=5.8.3,<6.0a0'
+    libzlib: '>=1.3.2,<2.0a0'
+  url: https://conda.anaconda.org/conda-forge/linux-aarch64/libxml2-16-2.15.4-h183574b_1.conda
+  hash:
+    md5: bef66bb00b0a18c129dedf0dee250e28
+    sha256: 935a9ee7eedc0e79b0eb3243fa1d1070fa981f37a492dea3f898ecb49e17ae09
   category: main
   optional: false
 - name: libzlib

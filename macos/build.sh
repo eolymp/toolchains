@@ -38,6 +38,7 @@ for each in $formula $(brew deps "$formula"); do
     done
 done
 python3 "$here/relocate.py" "$root" "$(brew --prefix)"
+ln -s g++-14 "$root/brew/$formula/bin/g++"
 
 while read -r platform sha256 url; do
   [ "$platform" = "$arch" ] || continue
@@ -56,7 +57,7 @@ test="$work/test"
 mkdir -p "$test/unpacked"
 tar -xzf "$archive" -C "$test/unpacked"
 rm -rf "$root"
-cxx="brew/$formula/bin/g++-14"
+cxx="brew/$formula/bin/g++"
 printf '#include <bits/stdc++.h>\nint main() { std::vector<int> v{3, 1, 2}; std::ranges::sort(v); std::cout << v[0] << v[2] << "\\n"; }\n' > "$test/a.cpp"
 SDKROOT="$(xcrun --show-sdk-path)" "$test/unpacked/$cxx" -std=c++23 -O2 -static-libstdc++ -static-libgcc "$test/a.cpp" -o "$test/a"
 [ "$("$test/a")" = 13 ]

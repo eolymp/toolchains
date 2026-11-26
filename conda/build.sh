@@ -6,9 +6,9 @@ here="$(cd "$(dirname "$0")" && pwd)"
 out="$(dirname "$here")/out"
 name="$1"
 case "$name" in
-  linux-x64) os=linux cxx=gcc/bin/x86_64-conda-linux-gnu-g++ python=python/bin/python3 flags='["-static-libstdc++", "-static-libgcc"]' ;;
-  linux-arm64) os=linux cxx=gcc/bin/aarch64-conda-linux-gnu-g++ python=python/bin/python3 flags='["-static-libstdc++", "-static-libgcc"]' ;;
-  win32-x64) os=win32 cxx=gcc/Library/bin/x86_64-w64-mingw32-g++.exe python=python/python.exe flags='["-static"]' ;;
+  linux-x64) os=linux driver=gcc/bin/x86_64-conda-linux-gnu-g++ cxx=gcc/bin/g++ python=python/bin/python3 flags='["-static-libstdc++", "-static-libgcc"]' ;;
+  linux-arm64) os=linux driver=gcc/bin/aarch64-conda-linux-gnu-g++ cxx=gcc/bin/g++ python=python/bin/python3 flags='["-static-libstdc++", "-static-libgcc"]' ;;
+  win32-x64) os=win32 driver=gcc/Library/bin/x86_64-w64-mingw32-g++.exe cxx=gcc/Library/bin/g++.exe python=python/python.exe flags='["-static"]' ;;
   *) echo "unknown system: $name"; exit 1 ;;
 esac
 
@@ -23,6 +23,7 @@ mkdir -p "$root/licenses" "$out" "$sources/files" "$sources/recipes"
 export MAMBA_ROOT_PREFIX="$(native "$work/mamba")"
 
 micromamba create -y -q -p "$(native "$root/gcc")" -f "$(native "$here/conda-lock.yml")"
+if [ "$os" = win32 ]; then cp "$root/$driver" "$root/$cxx"; else ln -s "$(basename "$driver")" "$root/$cxx"; fi
 
 fetch() {
   curl -fsSL --retry 3 -o "$2" "$1"
@@ -84,7 +85,7 @@ PATH="$(dirname "$test/unpacked/$cxx"):$PATH" "$test/unpacked/$cxx" -std=c++23 -
 "$test/unpacked/$python" -c 'import sys; assert sys.version_info[:2] == (3, 14)'
 
 clangd=""
-for candidate in clangd/bin/clangd clangd/bin/clangd.exe; do
+for candidate in clangd/bin/clangd clangd/bin/clangd.exe gcc/bin/clangd; do
   [ ! -e "$test/unpacked/$candidate" ] || clangd="$candidate"
 done
 [ -z "$clangd" ] || "$test/unpacked/$clangd" --version
