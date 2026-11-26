@@ -88,7 +88,14 @@ clangd=""
 for candidate in clangd/bin/clangd clangd/bin/clangd.exe gcc/bin/clangd; do
   [ ! -e "$test/unpacked/$candidate" ] || clangd="$candidate"
 done
-[ -z "$clangd" ] || "$test/unpacked/$clangd" --version
+if [ -n "$clangd" ]; then
+  "$test/unpacked/$clangd" --version
+  compiler="$test/unpacked/$cxx"
+  [ "$os" != win32 ] || compiler="$(cygpath -m "$compiler")"
+  printf 'CompileFlags:\n  Compiler: %s\n  Add: [-std=c++23]\n' "$compiler" > "$test/.clangd"
+  checked="$(PATH="$(dirname "$test/unpacked/$cxx"):$PATH" "$test/unpacked/$clangd" --check="$(native "$test/a.cpp")" --query-driver="$(native "$(dirname "$test/unpacked/$cxx")")/*" 2>&1)" || true
+  grep -q "All checks completed, 0 errors" <<< "$checked" || { echo "$checked"; exit 1; }
+fi
 
 jq -n --arg sha256 "$(sha256sum "$archive" | cut -d' ' -f1)" --arg cxx "$cxx" --arg python "$python" --arg clangd "$clangd" --argjson flags "$flags" \
   '{sha256: $sha256, cxx: $cxx, python: $python, clangd: $clangd, flags: $flags}' > "$out/$name.json"
